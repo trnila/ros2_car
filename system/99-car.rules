@@ -1,0 +1,7 @@
+SUBSYSTEM=="pwm", \
+	RUN+="/bin/chgrp -R car '/sys%p'", \
+	RUN+="/bin/chmod -R g=u '/sys%p'"
+
+SUBSYSTEM=="pwm", KERNEL=="pwmchip*", ACTION=="add", ATTR{export}="0"
+SUBSYSTEM=="pwm", KERNEL=="pwmchip*", ACTION=="add", ATTR{export}="1"
+

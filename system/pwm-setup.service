@@ -1,0 +1,9 @@
+[Unit]
+Description=Apply overlay for motor control PWM signals
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/dtoverlay pwm-2chan pin=12 func=4 pin2=13 func2=4
+
+[Install]
+WantedBy=multi-user.target
