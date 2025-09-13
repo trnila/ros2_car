@@ -5,7 +5,7 @@ rust_binary(
     name = "rust_talker",
     srcs = ["ultrasonic.rs"],
     deps = [
-        ":rust_std_msgs",
+        ":rust_sensor_msgs",
         "@ros2_rust//:rclrs",
         "@crates//:signal-hook",
         "@crates//:gpiocdev",
@@ -15,4 +15,10 @@ rust_binary(
 rust_ros2_interface_library(
     name = "rust_std_msgs",
     deps = ["@ros2_common_interfaces//:std_msgs"],
+)
+
+
+rust_ros2_interface_library(
+    name = "rust_sensor_msgs",
+    deps = ["@ros2_common_interfaces//:sensor_msgs"],
 )

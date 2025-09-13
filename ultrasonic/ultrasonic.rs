@@ -42,7 +42,7 @@ impl Ultrasonic {
         }
     }
 
-    fn measure(&self) -> f64 {
+    fn measure(&self) -> f32 {
         // clear all echo events
         while self.req.has_edge_event().unwrap() {
             self.req.read_edge_event().unwrap();
@@ -64,7 +64,7 @@ impl Ultrasonic {
             match received {
                 Some(received) => {
                     let time_diff = received.timestamp_ns - transmitted.timestamp_ns;
-                    let cm = time_diff as f64 * 1e-9 * 17150f64;
+                    let cm = time_diff as f32 * 1e-9 * 17150f32;
                     println!("{transmitted:?} {received:?} {time_diff} {cm}cm");
                     return cm;
                 }
@@ -78,29 +78,25 @@ impl Ultrasonic {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let ultrasonic = Ultrasonic::new();
-
     let shut_down = Arc::new(AtomicBool::new(false));
     signal_hook::flag::register(signal_hook::consts::SIGINT, Arc::clone(&shut_down))?;
 
     let context = rclrs::Context::new(env::args())?;
-
-    let node = rclrs::create_node(&context, "minimal_publisher")?;
+    let node = rclrs::create_node(&context, "ultrasonic")?;
 
     let publisher =
-        node.create_publisher::<std_msgs::msg::String>("topic", rclrs::QOS_PROFILE_DEFAULT)?;
+        node.create_publisher::<sensor_msgs::msg::Range>("topic", rclrs::QOS_PROFILE_DEFAULT)?;
+    let mut message = sensor_msgs::msg::Range::default();
 
-    let mut message = std_msgs::msg::String::default();
-
-    let mut publish_count: u32 = 1;
-
+    let ultrasonic = Ultrasonic::new();
     while !shut_down.load(Ordering::Relaxed) && context.ok() {
-        ultrasonic.measure();
+        let distance_cm = ultrasonic.measure();
 
-        message.data = format!("Hello, world! {}", publish_count);
+        message.range = distance_cm;
+
+        //message.data = format!("Hello, world! {}", publish_count);
         //log_info!(node.logger(), "Publishing: {}", message.data);
         publisher.publish(&message)?;
-        publish_count += 1;
         std::thread::sleep(std::time::Duration::from_millis(500));
     }
 
