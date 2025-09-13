@@ -111,7 +111,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 */
 
-struct CarController {
+pub struct CarController {
     motor_dir_line: FoundLine,
     motor_disable_line: FoundLine,
     gpios: Request,
@@ -186,22 +186,16 @@ impl CarController {
         self.servo_pwm.set_duty_cycle_ns(duty as u32).unwrap();
     }
 
+    pub fn stop(&self) {
+        self.set_motor_power(0);
+        self.set_steering(0);
+        println!("stopped");
+    }
+
     fn steering_angle_to_duty(&self, percent: i32) -> u32 {
         let servo_min: i32 = 800000;
         let servo_max: i32 = 1100000;
         ((servo_min + servo_max) / 2 + (servo_max - servo_min) / 2 * percent.clamp(-100, 100) / 100)
             as u32
     }
-}
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let controller = CarController::new();
-
-    for value in (-100..=100).chain((-100..=100).rev()) {
-        controller.set_motor_power(value);
-        controller.set_steering(value);
-        std::thread::sleep(Duration::from_millis(50));
-    }
-
-    Ok(())
 }

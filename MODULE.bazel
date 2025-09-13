@@ -91,6 +91,19 @@ crate.spec(
     package = "sysfs-pwm",
     version = "0.1.0",
 )
+crate.spec(
+    package = "clap",
+    version = "4.5.47",
+    features = ["derive"],
+)
+crate.spec(
+    package = "rustyline",
+    version = "17.0.1",
+)
+crate.spec(
+    package = "reedline",
+    version = "0.42.0",
+)
 crate.from_specs()
 use_repo(crate, "crates")
 
