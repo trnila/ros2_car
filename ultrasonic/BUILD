@@ -2,7 +2,7 @@ load("@com_github_mvukov_rules_ros2//ros2:rust_interfaces.bzl", "rust_ros2_inter
 load("@rules_rust//rust:defs.bzl", "rust_binary")
 
 rust_binary(
-    name = "rust_talker",
+    name = "ultrasonic",
     srcs = ["ultrasonic.rs"],
     deps = [
         ":rust_sensor_msgs",
