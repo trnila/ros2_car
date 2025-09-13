@@ -246,8 +246,8 @@
     "https://bcr.bazel.build/modules/rules_java/7.2.0/MODULE.bazel": "06c0334c9be61e6cef2c8c84a7800cef502063269a5af25ceb100b192453d4ab",
     "https://bcr.bazel.build/modules/rules_java/7.3.2/MODULE.bazel": "50dece891cfdf1741ea230d001aa9c14398062f2b7c066470accace78e412bc2",
     "https://bcr.bazel.build/modules/rules_java/7.6.1/MODULE.bazel": "2f14b7e8a1aa2f67ae92bc69d1ec0fa8d9f827c4e17ff5e5f02e91caa3b2d0fe",
-    "https://bcr.bazel.build/modules/rules_java/8.12.0/MODULE.bazel": "8e6590b961f2defdfc2811c089c75716cb2f06c8a4edeb9a8d85eaa64ee2a761",
-    "https://bcr.bazel.build/modules/rules_java/8.12.0/source.json": "cbd5d55d9d38d4008a7d00bee5b5a5a4b6031fcd4a56515c9accbcd42c7be2ba",
+    "https://bcr.bazel.build/modules/rules_java/8.14.0/MODULE.bazel": "717717ed40cc69994596a45aec6ea78135ea434b8402fb91b009b9151dd65615",
+    "https://bcr.bazel.build/modules/rules_java/8.14.0/source.json": "8a88c4ca9e8759da53cddc88123880565c520503321e2566b4e33d0287a3d4bc",
     "https://bcr.bazel.build/modules/rules_java/8.3.2/MODULE.bazel": "7336d5511ad5af0b8615fdc7477535a2e4e723a357b6713af439fe8cf0195017",
     "https://bcr.bazel.build/modules/rules_java/8.5.1/MODULE.bazel": "d8a9e38cc5228881f7055a6079f6f7821a073df3744d441978e7a43e20226939",
     "https://bcr.bazel.build/modules/rules_jvm_external/4.4.2/MODULE.bazel": "a56b85e418c83eb1839819f0b515c431010160383306d13ec21959ac412d2fe7",
@@ -360,7 +360,7 @@
     },
     "@@com_github_mvukov_rules_ros2+//ros2:extensions.bzl%non_module_deps": {
       "general": {
-        "bzlTransitiveDigest": "8zB9L6Rn+1W9hD1wCenSH4tBNPlTPYoTePZEtU7St60=",
+        "bzlTransitiveDigest": "/ibhbpqhnoOJWn/yBM+t4bvm8bRMHH5GarG80NBGiJc=",
         "usagesDigest": "Z6+l76k5y+EyqxKfa9ExWezr1c3RU5mBreA/bwxh0Ok=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -932,7 +932,7 @@
     },
     "@@rules_foreign_cc+//foreign_cc:extensions.bzl%tools": {
       "general": {
-        "bzlTransitiveDigest": "MW4A97mMGuraW70byeL5iUdP+6qprG8t1UShiMJdD8s=",
+        "bzlTransitiveDigest": "g6eqFMwHN2rVvQLs8u4iibhBwHiaS/K+PAC7pNBtkYI=",
         "usagesDigest": "PKJ/4yUmwmF/SjJ2HH9Xrp2gl5+NxehlhcdWxBLeWLI=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1272,7 +1272,7 @@
     },
     "@@rules_kotlin+//src/main/starlark/core/repositories:bzlmod_setup.bzl%rules_kotlin_extensions": {
       "general": {
-        "bzlTransitiveDigest": "hUTp2w+RUVdL7ma5esCXZJAFnX7vLbVfLd7FwnQI6bU=",
+        "bzlTransitiveDigest": "OlvsB0HsvxbR8ZN+J9Vf00X/+WVz/Y/5Xrq2LgcVfdo=",
         "usagesDigest": "QI2z8ZUR+mqtbwsf2fLqYdJAkPOHdOV+tF2yVAUgRzw=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1336,7 +1336,7 @@
     },
     "@@rules_python+//python/uv:uv.bzl%uv": {
       "general": {
-        "bzlTransitiveDigest": "bGHlxez0Lkvq2VwrlfCLraKHiJIRHSIJb432X2+pky8=",
+        "bzlTransitiveDigest": "PmZM/pIkZKEDDL68TohlKJrWPYKL5VwUw3MA7kmm6fk=",
         "usagesDigest": "WYhzIw9khRBy34H1GxV5+fI1yi07O90NmCXosPUdHWQ=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1371,121 +1371,6 @@
             "rules_python+",
             "platforms",
             "platforms"
-          ]
-        ]
-      }
-    },
-    "@@toolchains_arm_gnu+//:extensions.bzl%arm_toolchain": {
-      "general": {
-        "bzlTransitiveDigest": "kTqfR1zJvQQ9JYm48vfw+QETXPMHlw+EVElMdATmtuQ=",
-        "usagesDigest": "KVi7g+Zqg5ry9nUYbGfxf9CaQAk0P+iCfftCppqxXtU=",
-        "recordedFileInputs": {},
-        "recordedDirentsInputs": {},
-        "envVariables": {},
-        "generatedRepoSpecs": {
-          "aarch64_none_linux_gnu": {
-            "repoRuleId": "@@toolchains_arm_gnu+//:deps.bzl%toolchains_arm_gnu_repo",
-            "attributes": {
-              "toolchain_name": "aarch64_none_linux_gnu",
-              "toolchain_prefix": "aarch64-none-linux-gnu",
-              "version": "13.2.1",
-              "hosts": {
-                "aarch64_none_linux_gnu_linux_x86_64": [
-                  "@platforms//os:linux",
-                  "@platforms//cpu:x86_64"
-                ],
-                "aarch64_none_linux_gnu_windows_x86_64": [
-                  "@platforms//os:windows",
-                  "@platforms//cpu:x86_64"
-                ]
-              }
-            }
-          },
-          "aarch64_none_linux_gnu_linux_x86_64": {
-            "repoRuleId": "@@toolchains_arm_gnu+//:deps.bzl%arm_gnu_cross_hosted_platform_specific_repo",
-            "attributes": {
-              "toolchain_prefix": "aarch64-none-linux-gnu",
-              "version": "13.2.1",
-              "sha256": "12fcdf13a7430655229b20438a49e8566e26551ba08759922cdaf4695b0d4e23",
-              "strip_prefix": "arm-gnu-toolchain-13.2.Rel1-x86_64-aarch64-none-linux-gnu",
-              "url": "https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz?rev=22c39fc25e5541818967b4ff5a09ef3e&hash=B9FEDC2947EB21151985C2DC534ECCEC",
-              "patches": [
-                "@@toolchains_arm_gnu+//toolchain:patches/0001-Resolve-libc-relative-to-sysroot-aarch64_none_linux_gnu.patch"
-              ],
-              "exec_compatible_with": [
-                "@platforms//os:linux",
-                "@platforms//cpu:x86_64"
-              ]
-            }
-          },
-          "aarch64_none_linux_gnu_windows_x86_64": {
-            "repoRuleId": "@@toolchains_arm_gnu+//:deps.bzl%arm_gnu_cross_hosted_platform_specific_repo",
-            "attributes": {
-              "toolchain_prefix": "aarch64-none-linux-gnu",
-              "version": "13.2.1",
-              "sha256": "ccca7e520adbc5deb36d53a2b373e28a0c7e21107c487d4f5fd9cc8e0dbf6a11",
-              "strip_prefix": "arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-aarch64-none-linux-gnu",
-              "url": "https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.rel1-mingw-w64-i686-aarch64-none-linux-gnu.zip?rev=861fed530201460f8f58b10dca7bd431&hash=A040842727683903E8646B42A96A8B98",
-              "patches": [
-                "@@toolchains_arm_gnu+//toolchain:patches/0001-Resolve-libc-relative-to-sysroot-aarch64_none_linux_gnu.patch"
-              ],
-              "exec_compatible_with": [
-                "@platforms//os:windows",
-                "@platforms//cpu:x86_64"
-              ]
-            }
-          }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "bazel_features+",
-            "bazel_features_globals",
-            "bazel_features++version_extension+bazel_features_globals"
-          ],
-          [
-            "bazel_features+",
-            "bazel_features_version",
-            "bazel_features++version_extension+bazel_features_version"
-          ],
-          [
-            "protobuf+",
-            "proto_bazel_features",
-            "bazel_features+"
-          ],
-          [
-            "protobuf+",
-            "rules_cc",
-            "rules_cc+"
-          ],
-          [
-            "rules_cc+",
-            "bazel_tools",
-            "bazel_tools"
-          ],
-          [
-            "rules_cc+",
-            "com_google_protobuf",
-            "protobuf+"
-          ],
-          [
-            "rules_cc+",
-            "rules_cc",
-            "rules_cc+"
-          ],
-          [
-            "toolchains_arm_gnu+",
-            "bazel_tools",
-            "bazel_tools"
-          ],
-          [
-            "toolchains_arm_gnu+",
-            "rules_cc",
-            "rules_cc+"
-          ],
-          [
-            "toolchains_arm_gnu+",
-            "toolchains_arm_gnu",
-            "toolchains_arm_gnu+"
           ]
         ]
       }

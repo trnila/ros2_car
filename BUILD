@@ -1,4 +1,3 @@
-load("@aarch64_none_linux_gnu//toolchain:toolchain.bzl", "aarch64_none_linux_gnu_toolchain")
 
 platform(
     name = "aarch64",
@@ -8,14 +7,3 @@ platform(
     ],
 )
 
-aarch64_none_linux_gnu_toolchain(
-    name = "aarch64_none_linux_gnu",
-    copts = [
-        "-fPIC",
-    ],
-    linkopts = [
-        "-lc",
-        "-lstdc++",
-        "-lm",
-    ],
-)
