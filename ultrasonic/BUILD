@@ -7,7 +7,7 @@ rust_binary(
     deps = [
         ":rust_std_msgs",
         "@ros2_rust//:rclrs",
-        #"@rules_ros2_crate_index//:signal-hook",
+        "@crates//:signal-hook",
     ],
 )
 
