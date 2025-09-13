@@ -5,6 +5,19 @@ bazel_dep(name = "rules_cc", version = "0.1.1")
 bazel_dep(name = "rules_python", version = "1.5.1")
 bazel_dep(name = "rules_rust", version = "0.59.2")
 bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "toolchains_arm_gnu", version = "1.1.0")
+
+local_path_override(
+    module_name = "toolchains_arm_gnu",
+    path = "../toolchains_arm_gnu",
+)
+
+arm_toolchain = use_extension("@toolchains_arm_gnu//:extensions.bzl", "arm_toolchain")
+arm_toolchain.aarch64_none_linux_gnu()
+use_repo(arm_toolchain, "aarch64_none_linux_gnu")
+
+#register_toolchains("@aarch64_none_linux_gnu//toolchain:all")
+register_toolchains("@//:all")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
