@@ -9,4 +9,5 @@ rust_binary(
         "@crates//:signal-hook",
         "@crates//:gpiocdev",
     ],
+    visibility = ['//visibility:public'],
 )
