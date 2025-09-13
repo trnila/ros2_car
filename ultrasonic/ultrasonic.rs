@@ -87,6 +87,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let publisher =
         node.create_publisher::<sensor_msgs::msg::Range>("topic", rclrs::QOS_PROFILE_DEFAULT)?;
     let mut message = sensor_msgs::msg::Range::default();
+    message.radiation_type = sensor_msgs::msg::Range::ULTRASOUND;
+    message.field_of_view = 0.0;
+    message.min_range = 0.0;
+    message.max_range = 30.0;
 
     let ultrasonic = Ultrasonic::new();
     while !shut_down.load(Ordering::Relaxed) && context.ok() {
@@ -94,7 +98,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         message.range = distance_cm;
 
-        //message.data = format!("Hello, world! {}", publish_count);
         //log_info!(node.logger(), "Publishing: {}", message.data);
         publisher.publish(&message)?;
         std::thread::sleep(std::time::Duration::from_millis(500));
