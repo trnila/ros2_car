@@ -79,5 +79,9 @@ crate.spec(
     package = "signal-hook",
     version = "0.3.18",
 )
+crate.spec(
+    package = "gpiocdev",
+    version = "0.7.3",
+)
 crate.from_specs()
 use_repo(crate, "crates")

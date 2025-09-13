@@ -8,6 +8,7 @@ rust_binary(
         ":rust_std_msgs",
         "@ros2_rust//:rclrs",
         "@crates//:signal-hook",
+        "@crates//:gpiocdev",
     ],
 )
 
