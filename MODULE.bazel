@@ -73,6 +73,9 @@ use_repo(
     "ros2_rclpy",
     "ros2_rosidl",
     "ros2cli",
+    "ros2_pluginlib",
+    "ros2_geometry2",
+    "ros2_rcl",
 )
 
 crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
@@ -86,3 +89,20 @@ crate.spec(
 )
 crate.from_specs()
 use_repo(crate, "crates")
+
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "nav2",
+    url = "https://github.com/ros-navigation/navigation2/archive/476d9e8d15892869c32a23252c2500196412e3a5.zip",
+    build_file = "//:nav2.BUILD",
+    strip_prefix = "navigation2-476d9e8d15892869c32a23252c2500196412e3a5",
+    sha256 = "177b0f783486140c9bdad4f3ce7ed27cf56d2c7fda5b20d96d2e54c7765aa71b",
+ )
+
+http_archive(
+    name = "message_filters",
+    url = "https://github.com/ros2/message_filters/archive/85eef88521edc397c93e28780d96915c8b628b91.zip",
+    build_file = "//:message_filters.BUILD",
+    strip_prefix = "message_filters-85eef88521edc397c93e28780d96915c8b628b91",
+)
