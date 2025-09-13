@@ -111,74 +111,97 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 */
 
-fn steering_angle_to_duty(percent: i32) -> u32 {
-    let servo_min: i32 = 800000;
-    let servo_max: i32 = 1100000;
-    ((servo_min + servo_max) / 2 + (servo_max - servo_min) / 2 * percent.clamp(-100, 100) / 100)
-        as u32
+struct CarController {
+    motor_dir_line: FoundLine,
+    motor_disable_line: FoundLine,
+    gpios: Request,
+    motor_pwm: Pwm,
+    servo_pwm: Pwm,
+    period_pwm: u32,
+    max_motor_speed: f32,
+}
+
+impl CarController {
+    pub fn new() -> Self {
+        let motor_dir_line: FoundLine = gpiocdev::find_named_line("GPIO6").unwrap();
+        let motor_disable_line = gpiocdev::find_named_line("GPIO19").unwrap();
+        let actuator_en_gpio = gpiocdev::find_named_line("SPI_MOSI").unwrap();
+
+        let gpios = gpiocdev::Request::builder()
+            .with_consumer("motor_controller")
+            .with_found_line(&motor_dir_line)
+            .as_output(Value::Inactive)
+            .with_found_line(&motor_disable_line)
+            .as_output(Value::Inactive)
+            .with_found_line(&actuator_en_gpio)
+            .as_output(Value::Active)
+            .request()
+            .unwrap();
+
+        let period_pwm = 20_000_000;
+        let servo_pwm = Pwm::new(0, 1).unwrap();
+        let motor_pwm = Pwm::new(0, 0).unwrap();
+
+        let configure_pwm = |pwm: &Pwm| {
+            pwm.export().unwrap();
+            pwm.enable(false).unwrap();
+            pwm.set_period_ns(period_pwm).unwrap();
+            pwm.enable(true).unwrap();
+        };
+
+        configure_pwm(&motor_pwm);
+        configure_pwm(&servo_pwm);
+
+        CarController {
+            motor_dir_line,
+            motor_disable_line,
+            gpios,
+            motor_pwm,
+            servo_pwm,
+            period_pwm,
+            max_motor_speed: 20.0,
+        }
+    }
+
+    /// speed: -100 to 100
+    pub fn set_motor_power(&self, speed: i8) {
+        let percent = speed.clamp(-100, 100).abs() as f32 / 100.0 * self.max_motor_speed;
+        let duty = (percent / 100.0 * self.period_pwm as f32) as u32;
+        println!("{duty}");
+
+        self.gpios
+            .set_values(
+                Values::default()
+                    .set(self.motor_disable_line.info.offset, (speed == 0).into())
+                    .set(self.motor_dir_line.info.offset, (speed < 0).into()),
+            )
+            .unwrap();
+        self.motor_pwm.set_duty_cycle_ns(duty as u32).unwrap();
+    }
+
+    /// angle: -100 to 100
+    pub fn set_steering(&self, angle: i8) {
+        let duty = self.steering_angle_to_duty(angle as i32);
+        println!("{duty}");
+        self.servo_pwm.set_duty_cycle_ns(duty as u32).unwrap();
+    }
+
+    fn steering_angle_to_duty(&self, percent: i32) -> u32 {
+        let servo_min: i32 = 800000;
+        let servo_max: i32 = 1100000;
+        ((servo_min + servo_max) / 2 + (servo_max - servo_min) / 2 * percent.clamp(-100, 100) / 100)
+            as u32
+    }
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let motor_dir_line = gpiocdev::find_named_line("GPIO6").unwrap();
-    let motor_disable_line = gpiocdev::find_named_line("GPIO19").unwrap();
+    let controller = CarController::new();
 
-    let actuator_en_gpio = gpiocdev::find_named_line("SPI_MOSI").unwrap();
+    for value in (-100..=100).chain((-100..=100).rev()) {
+        controller.set_motor_power(value);
+        controller.set_steering(value);
+        std::thread::sleep(Duration::from_millis(50));
+    }
 
-    let req = gpiocdev::Request::builder()
-        .with_consumer("motor")
-        .with_found_line(&motor_dir_line)
-        .as_output(Value::Inactive)
-        .with_found_line(&motor_disable_line)
-        .as_output(Value::Inactive)
-        .with_found_line(&actuator_en_gpio)
-        .as_output(Value::Active)
-        .request()
-        .unwrap();
-
-    let period = 20_000_000;
-
-    let servo_pwm = Pwm::new(0, 1).unwrap();
-    servo_pwm
-        .with_exported(|| {
-            servo_pwm.enable(false).unwrap();
-            servo_pwm.set_period_ns(period).unwrap();
-            servo_pwm.enable(true).unwrap();
-
-            let duty = steering_angle_to_duty(-100);
-            println!("{duty}");
-            servo_pwm.set_duty_cycle_ns(duty as u32).unwrap();
-
-            loop {}
-        })
-        .unwrap();
-
-    println!("fc");
-
-    let motor_max_perc = 20f32;
-
-    let motor_pwm = Pwm::new(0, 0).unwrap();
-    motor_pwm
-        .with_exported(|| {
-            motor_pwm.enable(false).unwrap();
-            motor_pwm.set_period_ns(period).unwrap();
-            motor_pwm.enable(true).unwrap();
-
-            let speed: i32 = 20;
-
-            let percent = speed.clamp(-100, 100).abs() as f32 / 100.0 * motor_max_perc;
-            let duty = percent / 100.0 * period as f32;
-            println!("{duty}");
-
-            req.set_values(
-                Values::default()
-                    .set(motor_disable_line.info.offset, (speed == 0).into())
-                    .set(motor_dir_line.info.offset, (speed < 0).into()),
-            )
-            .unwrap();
-            motor_pwm.set_duty_cycle_ns(duty as u32).unwrap();
-
-            loop {}
-        })
-        .unwrap();
     Ok(())
 }
