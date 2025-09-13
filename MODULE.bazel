@@ -72,6 +72,7 @@ use_repo(
     # Required for bazel run:
     "ros2_rclpy",
     "ros2_rosidl",
+    "ros2cli",
 )
 
 crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
