@@ -87,6 +87,10 @@ crate.spec(
     package = "gpiocdev",
     version = "0.7.3",
 )
+crate.spec(
+    package = "sysfs-pwm",
+    version = "0.1.0",
+)
 crate.from_specs()
 use_repo(crate, "crates")
 
