@@ -88,7 +88,7 @@ impl Ultrasonic {
             })?;
         // wait when signals is returned back
         let received = self
-            .wait_event(EdgeKind::Falling, Duration::from_millis(50))
+            .wait_event(EdgeKind::Falling, Duration::from_millis(45))
             .map_err(|err| match err {
                 EdgeError::Timeout => MeasurementError::NoEcho,
                 EdgeError::WrongEdge => MeasurementError::WrongEdge,
