@@ -104,6 +104,10 @@ crate.spec(
     package = "reedline",
     version = "0.42.0",
 )
+crate.spec(
+    package = "clap-repl",
+    version = "0.3.2",
+)
 crate.from_specs()
 use_repo(crate, "crates")
 

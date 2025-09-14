@@ -20,7 +20,8 @@ rust_binary(
         #"@crates//:signal-hook",
         "@crates//:gpiocdev",
         "@crates//:sysfs-pwm",
-        ":car_controller"
+        ":car_controller",
+        "@crates//:clap-repl",
     ],
 )
 
