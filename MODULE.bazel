@@ -97,14 +97,6 @@ crate.spec(
     features = ["derive"],
 )
 crate.spec(
-    package = "rustyline",
-    version = "17.0.1",
-)
-crate.spec(
-    package = "reedline",
-    version = "0.42.0",
-)
-crate.spec(
     package = "clap-repl",
     version = "0.3.2",
 )

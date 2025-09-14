@@ -14,12 +14,6 @@ rust_binary(
     srcs = ["cli.rs"],
     deps = [
         "@crates//:clap",
-        "@crates//:reedline",
-        "//:rust_sensor_msgs",
-        #"@ros2_rust//:rclrs",
-        #"@crates//:signal-hook",
-        "@crates//:gpiocdev",
-        "@crates//:sysfs-pwm",
         ":car_controller",
         "@crates//:clap-repl",
     ],
