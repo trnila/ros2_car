@@ -1,14 +1,7 @@
-use gpiocdev::line::EdgeDetection;
-use gpiocdev::line::EdgeEvent;
-use gpiocdev::line::EdgeKind;
 use gpiocdev::line::Value;
 use gpiocdev::line::Values;
 use gpiocdev::{FoundLine, Request};
 //use rclrs::{log_info, ToLogParams};
-use std::env;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
-use std::time::Duration;
 use sysfs_pwm::Pwm;
 
 /*
@@ -121,8 +114,8 @@ pub struct CarController {
     max_motor_speed: f32,
 }
 
-impl CarController {
-    pub fn new() -> Self {
+impl Default for CarController {
+    fn default() -> Self {
         let motor_dir_line: FoundLine = gpiocdev::find_named_line("GPIO6").unwrap();
         let motor_disable_line = gpiocdev::find_named_line("GPIO19").unwrap();
         let actuator_en_gpio = gpiocdev::find_named_line("SPI_MOSI").unwrap();
@@ -162,7 +155,9 @@ impl CarController {
             max_motor_speed: 20.0,
         }
     }
+}
 
+impl CarController {
     /// speed: -100 to 100
     pub fn set_motor_power(&self, speed: i8) {
         let percent = speed.clamp(-100, 100).abs() as f32 / 100.0 * self.max_motor_speed;
@@ -176,14 +171,14 @@ impl CarController {
                     .set(self.motor_dir_line.info.offset, (speed < 0).into()),
             )
             .unwrap();
-        self.motor_pwm.set_duty_cycle_ns(duty as u32).unwrap();
+        self.motor_pwm.set_duty_cycle_ns(duty).unwrap();
     }
 
     /// angle: -100 to 100
     pub fn set_steering(&self, angle: i8) {
         let duty = self.steering_angle_to_duty(angle as i32);
         println!("{duty}");
-        self.servo_pwm.set_duty_cycle_ns(duty as u32).unwrap();
+        self.servo_pwm.set_duty_cycle_ns(duty).unwrap();
     }
 
     pub fn stop(&self) {

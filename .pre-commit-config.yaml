@@ -4,11 +4,6 @@ repos:
   hooks:
     - id: end-of-file-fixer
     - id: trailing-whitespace
-- repo: https://github.com/doublify/pre-commit-rust
-  rev: v1.0
-  hooks:
-   - id: fmt
-   - id: clippy
 - repo: https://github.com/keith/pre-commit-buildifier
   rev: 8.0.3
   hooks:

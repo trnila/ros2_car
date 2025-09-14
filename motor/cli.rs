@@ -1,10 +1,8 @@
 use std::time::Duration;
 
 use car_controller::CarController;
-use clap::{Parser, Subcommand};
-use clap_repl::reedline::{
-    DefaultPrompt, DefaultPromptSegment, FileBackedHistory, Reedline, Signal,
-};
+use clap::Parser;
+use clap_repl::reedline::{DefaultPrompt, DefaultPromptSegment};
 use clap_repl::ClapEditor;
 
 #[derive(Debug, Parser)]
@@ -35,7 +33,7 @@ fn test(controller: &CarController) {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let controller = CarController::new();
+    let controller = CarController::default();
 
     let prompt = DefaultPrompt {
         left_prompt: DefaultPromptSegment::Basic("car".to_owned()),

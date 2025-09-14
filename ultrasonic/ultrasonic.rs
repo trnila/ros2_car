@@ -3,7 +3,6 @@ use gpiocdev::line::EdgeEvent;
 use gpiocdev::line::EdgeKind;
 use gpiocdev::line::Value;
 use gpiocdev::{FoundLine, Request};
-use rclrs::{log_info, ToLogParams};
 use std::env;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
@@ -14,8 +13,8 @@ pub struct Ultrasonic {
     req: Request,
 }
 
-impl Ultrasonic {
-    pub fn new() -> Self {
+impl Default for Ultrasonic {
+    fn default() -> Self {
         let trigger_line = gpiocdev::find_named_line("GPIO23").unwrap();
         let echo_line = gpiocdev::find_named_line("GPIO24").unwrap();
 
@@ -31,7 +30,9 @@ impl Ultrasonic {
 
         Ultrasonic { trigger_line, req }
     }
+}
 
+impl Ultrasonic {
     fn wait_event(&self, kind: EdgeKind, timeout: Duration) -> Option<EdgeEvent> {
         if self.req.wait_edge_event(timeout).unwrap() {
             let event = self.req.read_edge_event().unwrap();
@@ -61,18 +62,13 @@ impl Ultrasonic {
         let transmitted = self.wait_event(EdgeKind::Rising, timeout);
         if let Some(transmitted) = transmitted {
             let received = self.wait_event(EdgeKind::Falling, timeout);
-            match received {
-                Some(received) => {
-                    let time_diff = received.timestamp_ns - transmitted.timestamp_ns;
-                    let cm = time_diff as f32 * 1e-9 * 17150f32;
-                    println!("{transmitted:?} {received:?} {time_diff} {cm}cm");
-                    return cm;
-                }
-                None => {}
+            if let Some(received) = received {
+                let time_diff = received.timestamp_ns - transmitted.timestamp_ns;
+                let cm = time_diff as f32 * 1e-9 * 17150f32;
+                println!("{transmitted:?} {received:?} {time_diff} {cm}cm");
+                return cm;
             };
-        } else {
         }
-
         0.0
     }
 }
@@ -86,13 +82,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let publisher =
         node.create_publisher::<sensor_msgs::msg::Range>("topic", rclrs::QOS_PROFILE_DEFAULT)?;
-    let mut message = sensor_msgs::msg::Range::default();
-    message.radiation_type = sensor_msgs::msg::Range::ULTRASOUND;
-    message.field_of_view = 0.0;
-    message.min_range = 0.0;
-    message.max_range = 30.0;
+    let mut message = sensor_msgs::msg::Range {
+        radiation_type: sensor_msgs::msg::Range::ULTRASOUND,
+        field_of_view: 0.0,
+        min_range: 0.0,
+        max_range: 30.0,
+        ..Default::default()
+    };
 
-    let ultrasonic = Ultrasonic::new();
+    let ultrasonic = Ultrasonic::default();
     while !shut_down.load(Ordering::Relaxed) && context.ok() {
         let distance_cm = ultrasonic.measure();
 
