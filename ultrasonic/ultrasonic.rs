@@ -6,6 +6,7 @@ use gpiocdev::{FoundLine, Request};
 use std::env;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::thread;
 use std::time::Duration;
 
 pub struct Ultrasonic {
@@ -53,23 +54,23 @@ impl Ultrasonic {
         self.req
             .set_value(self.trigger_line.info.offset, Value::Active)
             .unwrap();
+        thread::sleep(Duration::from_micros(10));
         self.req
             .set_value(self.trigger_line.info.offset, Value::Inactive)
             .unwrap();
 
-        // wait for the start
-        let timeout = Duration::from_millis(1000);
-        let transmitted = self.wait_event(EdgeKind::Rising, timeout);
+        // wait for the start of ultrasound transmission
+        let transmitted = self.wait_event(EdgeKind::Rising, Duration::from_millis(1));
         if let Some(transmitted) = transmitted {
-            let received = self.wait_event(EdgeKind::Falling, timeout);
+            // wait when signals is returned back
+            let received = self.wait_event(EdgeKind::Falling, Duration::from_millis(50));
             if let Some(received) = received {
                 let time_diff = received.timestamp_ns - transmitted.timestamp_ns;
                 let cm = time_diff as f32 * 1e-9 * 17150f32;
-                println!("{transmitted:?} {received:?} {time_diff} {cm}cm");
                 return cm;
-            };
+            }
         }
-        0.0
+        f32::NAN
     }
 }
 
@@ -86,7 +87,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         radiation_type: sensor_msgs::msg::Range::ULTRASOUND,
         field_of_view: 0.0,
         min_range: 0.0,
-        max_range: 30.0,
+        max_range: 450.0,
         ..Default::default()
     };
 
