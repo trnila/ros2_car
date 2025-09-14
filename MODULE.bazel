@@ -119,3 +119,10 @@ http_archive(
     build_file = "//:message_filters.BUILD",
     strip_prefix = "message_filters-85eef88521edc397c93e28780d96915c8b628b91",
 )
+
+http_archive(
+    name = "bond_core",
+    url = "https://github.com/ros/bond_core/archive/51536917f0d2c51a40c9f9cd73a9bce1c9a07bff.zip",
+    build_file = "//:bond_core.BUILD",
+    strip_prefix = "bond_core-51536917f0d2c51a40c9f9cd73a9bce1c9a07bff",
+)

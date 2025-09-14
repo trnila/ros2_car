@@ -23,6 +23,7 @@ DEPS = [
         "@ros2_geometry2//:cpp_tf2_geometry_msgs",
         "@ros2_common_interfaces//:cpp_nav_msgs",
         "@ros2_rclcpp//:rclcpp_lifecycle",
+        "@bond_core//:bondcpp",
         
 ]
 
