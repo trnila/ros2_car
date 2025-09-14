@@ -1,108 +1,14 @@
 use gpiocdev::line::Value;
 use gpiocdev::line::Values;
 use gpiocdev::{FoundLine, Request};
-//use rclrs::{log_info, ToLogParams};
 use sysfs_pwm::Pwm;
 
-/*
-pub struct Ultrasonic {
-    trigger_line: FoundLine,
-    req: Request,
+fn steering_angle_to_duty(percent: i32) -> u32 {
+    let servo_min: i32 = 800000;
+    let servo_max: i32 = 1100000;
+    ((servo_min + servo_max) / 2 + (servo_max - servo_min) / 2 * percent.clamp(-100, 100) / 100)
+        as u32
 }
-
-impl Ultrasonic {
-    pub fn new() -> Self {
-        let trigger_line = gpiocdev::find_named_line("GPIO23").unwrap();
-        let echo_line = gpiocdev::find_named_line("GPIO24").unwrap();
-
-        let req = gpiocdev::Request::builder()
-            .with_consumer("ultrasonic")
-            .with_found_line(&trigger_line)
-            .as_output(Value::Inactive)
-            .with_found_line(&echo_line)
-            .as_input()
-            .with_edge_detection(EdgeDetection::BothEdges)
-            .request()
-            .unwrap();
-
-        Ultrasonic { trigger_line, req }
-    }
-
-    fn wait_event(&self, kind: EdgeKind, timeout: Duration) -> Option<EdgeEvent> {
-        if self.req.wait_edge_event(timeout).unwrap() {
-            let event = self.req.read_edge_event().unwrap();
-            assert!(event.kind == kind);
-            Some(event)
-        } else {
-            None
-        }
-    }
-
-    fn measure(&self) -> f32 {
-        // clear all echo events
-        while self.req.has_edge_event().unwrap() {
-            self.req.read_edge_event().unwrap();
-        }
-
-        // trigger ultrasonic beam
-        self.req
-            .set_value(self.trigger_line.info.offset, Value::Active)
-            .unwrap();
-        self.req
-            .set_value(self.trigger_line.info.offset, Value::Inactive)
-            .unwrap();
-
-        // wait for the start
-        let timeout = Duration::from_millis(1000);
-        let transmitted = self.wait_event(EdgeKind::Rising, timeout);
-        if let Some(transmitted) = transmitted {
-            let received = self.wait_event(EdgeKind::Falling, timeout);
-            match received {
-                Some(received) => {
-                    let time_diff = received.timestamp_ns - transmitted.timestamp_ns;
-                    let cm = time_diff as f32 * 1e-9 * 17150f32;
-                    println!("{transmitted:?} {received:?} {time_diff} {cm}cm");
-                    return cm;
-                }
-                None => {}
-            };
-        } else {
-        }
-
-        0.0
-    }
-}
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let shut_down = Arc::new(AtomicBool::new(false));
-    signal_hook::flag::register(signal_hook::consts::SIGINT, Arc::clone(&shut_down))?;
-
-    let context = rclrs::Context::new(env::args())?;
-    let node = rclrs::create_node(&context, "ultrasonic")?;
-
-    let publisher =
-        node.create_publisher::<sensor_msgs::msg::Range>("topic", rclrs::QOS_PROFILE_DEFAULT)?;
-    let mut message = sensor_msgs::msg::Range::default();
-    message.radiation_type = sensor_msgs::msg::Range::ULTRASOUND;
-    message.field_of_view = 0.0;
-    message.min_range = 0.0;
-    message.max_range = 30.0;
-
-    let ultrasonic = Ultrasonic::new();
-    while !shut_down.load(Ordering::Relaxed) && context.ok() {
-        let distance_cm = ultrasonic.measure();
-
-        message.range = distance_cm;
-
-        //log_info!(node.logger(), "Publishing: {}", message.data);
-        publisher.publish(&message)?;
-        std::thread::sleep(std::time::Duration::from_millis(500));
-    }
-
-    Ok(())
-}
-
-*/
 
 pub struct CarController {
     motor_dir_line: FoundLine,
@@ -135,15 +41,16 @@ impl Default for CarController {
         let servo_pwm = Pwm::new(0, 1).unwrap();
         let motor_pwm = Pwm::new(0, 0).unwrap();
 
-        let configure_pwm = |pwm: &Pwm| {
+        let configure_pwm = |pwm: &Pwm, zero: u32| {
             pwm.export().unwrap();
             pwm.enable(false).unwrap();
             pwm.set_period_ns(period_pwm).unwrap();
+            pwm.set_duty_cycle_ns(zero).unwrap();
             pwm.enable(true).unwrap();
         };
 
-        configure_pwm(&motor_pwm);
-        configure_pwm(&servo_pwm);
+        configure_pwm(&motor_pwm, 0);
+        configure_pwm(&servo_pwm, steering_angle_to_duty(0));
 
         CarController {
             motor_dir_line,
@@ -176,7 +83,7 @@ impl CarController {
 
     /// angle: -100 to 100
     pub fn set_steering(&self, angle: i8) {
-        let duty = self.steering_angle_to_duty(angle as i32);
+        let duty = steering_angle_to_duty(angle as i32);
         println!("{duty}");
         self.servo_pwm.set_duty_cycle_ns(duty).unwrap();
     }
@@ -185,12 +92,5 @@ impl CarController {
         self.set_motor_power(0);
         self.set_steering(0);
         println!("stopped");
-    }
-
-    fn steering_angle_to_duty(&self, percent: i32) -> u32 {
-        let servo_min: i32 = 800000;
-        let servo_max: i32 = 1100000;
-        ((servo_min + servo_max) / 2 + (servo_max - servo_min) / 2 * percent.clamp(-100, 100) / 100)
-            as u32
     }
 }
