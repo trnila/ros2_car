@@ -10,6 +10,8 @@ load(
 
 DEPS = [
     "@ros2_common_interfaces//:cpp_geometry_msgs",
+    "@ros2_common_interfaces//:c_geometry_msgs",
+    "@ros2_common_interfaces//:cpp_std_srvs",
     "@ros2_rclcpp//:rclcpp",
     "@message_filters",
     "@ros2_pluginlib//:pluginlib",
@@ -231,7 +233,10 @@ ros2_cpp_library(
         allow_empty = True,
     ),
     includes = ["nav2_controller/include"],
-    deps = DEPS,
+    deps = DEPS + [
+        ":nav2_core",
+        ":nav2_costmap_2d",
+    ],
 )
 
 ros2_cpp_library(
