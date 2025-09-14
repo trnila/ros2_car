@@ -13,10 +13,9 @@ bazel_dep(name = "platforms", version = "1.0.0")
 #)
 
 local_path_override(
-	module_name="com_github_mvukov_rules_ros2",
-	path = "../rules_ros2"
+    module_name = "com_github_mvukov_rules_ros2",
+    path = "../rules_ros2",
 )
-
 
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(
@@ -70,12 +69,12 @@ use_repo(
     "ros2_rclcpp",
     "ros2_rust",
     # Required for bazel run:
+    "ros2_geometry2",
+    "ros2_pluginlib",
+    "ros2_rcl",
     "ros2_rclpy",
     "ros2_rosidl",
     "ros2cli",
-    "ros2_pluginlib",
-    "ros2_geometry2",
-    "ros2_rcl",
 )
 
 crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
@@ -92,9 +91,9 @@ crate.spec(
     version = "0.1.0",
 )
 crate.spec(
+    features = ["derive"],
     package = "clap",
     version = "4.5.47",
-    features = ["derive"],
 )
 crate.spec(
     package = "clap-repl",
@@ -103,26 +102,26 @@ crate.spec(
 crate.from_specs()
 use_repo(crate, "crates")
 
-
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 http_archive(
     name = "nav2",
-    url = "https://github.com/ros-navigation/navigation2/archive/476d9e8d15892869c32a23252c2500196412e3a5.zip",
     build_file = "//:nav2.BUILD",
-    strip_prefix = "navigation2-476d9e8d15892869c32a23252c2500196412e3a5",
     sha256 = "177b0f783486140c9bdad4f3ce7ed27cf56d2c7fda5b20d96d2e54c7765aa71b",
- )
+    strip_prefix = "navigation2-476d9e8d15892869c32a23252c2500196412e3a5",
+    url = "https://github.com/ros-navigation/navigation2/archive/476d9e8d15892869c32a23252c2500196412e3a5.zip",
+)
 
 http_archive(
     name = "message_filters",
-    url = "https://github.com/ros2/message_filters/archive/85eef88521edc397c93e28780d96915c8b628b91.zip",
     build_file = "//:message_filters.BUILD",
     strip_prefix = "message_filters-85eef88521edc397c93e28780d96915c8b628b91",
+    url = "https://github.com/ros2/message_filters/archive/85eef88521edc397c93e28780d96915c8b628b91.zip",
 )
 
 http_archive(
     name = "bond_core",
-    url = "https://github.com/ros/bond_core/archive/51536917f0d2c51a40c9f9cd73a9bce1c9a07bff.zip",
     build_file = "//:bond_core.BUILD",
     strip_prefix = "bond_core-51536917f0d2c51a40c9f9cd73a9bce1c9a07bff",
+    url = "https://github.com/ros/bond_core/archive/51536917f0d2c51a40c9f9cd73a9bce1c9a07bff.zip",
 )

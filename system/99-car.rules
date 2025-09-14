@@ -4,4 +4,3 @@ SUBSYSTEM=="pwm", \
 
 SUBSYSTEM=="pwm", KERNEL=="pwmchip*", ACTION=="add", ATTR{export}="0"
 SUBSYSTEM=="pwm", KERNEL=="pwmchip*", ACTION=="add", ATTR{export}="1"
-

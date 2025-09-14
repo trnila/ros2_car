@@ -13,8 +13,8 @@ rust_binary(
     name = "cli",
     srcs = ["cli.rs"],
     deps = [
-        "@crates//:clap",
         ":car_controller",
+        "@crates//:clap",
         "@crates//:clap-repl",
     ],
 )
@@ -22,6 +22,7 @@ rust_binary(
 rust_binary(
     name = "motor",
     srcs = ["motor.rs"],
+    visibility = ["//visibility:public"],
     deps = [
         "//:rust_sensor_msgs",
         #"@ros2_rust//:rclrs",
@@ -29,5 +30,4 @@ rust_binary(
         "@crates//:gpiocdev",
         "@crates//:sysfs-pwm",
     ],
-    visibility = ['//visibility:public'],
 )
