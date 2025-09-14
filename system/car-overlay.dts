@@ -2,15 +2,14 @@
 /plugin/;
 
 / {
-  compatible = "brcm,bcm2835", "brcm,bcm2836", "brcm,bcm2708", "brcm,bcm2709";
+	compatible = "brcm,bcm2835", "brcm,bcm2836", "brcm,bcm2708", "brcm,bcm2709";
 
 	fragment@0 {
 		target = <&pwm>;
 		__overlay__ {
 			pinctrl-names = "default";
+			/* PWM for steering and motor */
 			pinctrl-0 = <&pwm0_0_gpio12 &pwm0_1_gpio13>;
-			status = "okay";
-			testik = "ano";
 		};
 	};
 };
