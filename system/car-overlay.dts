@@ -14,7 +14,7 @@
 	};
 
 	fragment@1 {
-		target = <&i2c0_0>;
+		target = <&i2c0_1>;
 		__overlay__ {
 			status = "okay";
 
@@ -58,7 +58,7 @@
 	};
 
 	fragment@3 {
-		target = <&csi0>;
+		target = <&csi1>;
 		__overlay__ {
 			status = "okay";
 
