@@ -18,16 +18,3 @@ rust_binary(
         "@crates//:clap-repl",
     ],
 )
-
-rust_binary(
-    name = "motor",
-    srcs = ["motor.rs"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//:rust_sensor_msgs",
-        #"@ros2_rust//:rclrs",
-        #"@crates//:signal-hook",
-        "@crates//:gpiocdev",
-        "@crates//:sysfs-pwm",
-    ],
-)
