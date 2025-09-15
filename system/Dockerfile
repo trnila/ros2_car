@@ -40,5 +40,4 @@ ADD car-overlay.dts /boot/
 RUN dtc -@ -I dts -O dtb /boot/car-overlay.dts > /boot/dtbs/car-overlay.dtbo \
   # compile u-boot script boot.txt into boot.scr
   && cd /boot \
-  && ./mkscr 
-
+  && ./mkscr
