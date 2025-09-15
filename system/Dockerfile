@@ -23,7 +23,8 @@ RUN --mount=target=/var/cache/pacman/pkg,type=cache,rw=true \
     clang \
     bazel \
     rsync \
-    linux-rpi
+    linux-rpi \
+    libcamera
 
 RUN userdel -r alarm \
   # allow only ssh key auth and root user
