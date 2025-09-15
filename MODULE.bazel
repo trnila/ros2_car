@@ -110,31 +110,34 @@ http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "ht
 
 http_archive(
     name = "nav2",
-    build_file = "//:nav2.BUILD",
-    sha256 = "177b0f783486140c9bdad4f3ce7ed27cf56d2c7fda5b20d96d2e54c7765aa71b",
+    build_file = "//third_party:nav2.BUILD",
+    integrity = "sha256-F3sPeDSGFAyb2tTzzn7SfPVtLH/aWyDZbS5Ux3Zapxs=",
     strip_prefix = "navigation2-476d9e8d15892869c32a23252c2500196412e3a5",
     url = "https://github.com/ros-navigation/navigation2/archive/476d9e8d15892869c32a23252c2500196412e3a5.zip",
 )
 
 http_archive(
     name = "message_filters",
-    build_file = "//:message_filters.BUILD",
+    build_file = "//third_party:message_filters.BUILD",
+    integrity = "sha256-zgL5e3d3dQuncsbRLNSY64MTnhL7qSOkeBkosMgBSug=",
     strip_prefix = "message_filters-85eef88521edc397c93e28780d96915c8b628b91",
     url = "https://github.com/ros2/message_filters/archive/85eef88521edc397c93e28780d96915c8b628b91.zip",
 )
 
 http_archive(
     name = "bond_core",
-    build_file = "//:bond_core.BUILD",
+    build_file = "//third_party:bond_core.BUILD",
+    integrity = "sha256-txpKyI+Q3O4/l4cfiLGpDZegrZLbSm+M/cQCIigwzK4=",
     strip_prefix = "bond_core-51536917f0d2c51a40c9f9cd73a9bce1c9a07bff",
     url = "https://github.com/ros/bond_core/archive/51536917f0d2c51a40c9f9cd73a9bce1c9a07bff.zip",
 )
 
 http_archive(
     name = "camera_ros",
-    build_file = "//:camera_ros.BUILD",
+    build_file = "//third_party:camera_ros.BUILD",
+    integrity = "sha256-Ae5nHGgwJ9+eyJk+BwX9c7QaYh59NFWu+eq2qbkQnCo=",
     patches = [
-        "//:camera_ros.patch",
+        "//third_party:camera_ros.patch",
     ],
     strip_prefix = "camera_ros-1eaa81fe43c4091b94a3a01d401f5dd3b19f462c",
     url = "https://github.com/christianrauch/camera_ros/archive/1eaa81fe43c4091b94a3a01d401f5dd3b19f462c.zip",
@@ -142,14 +145,15 @@ http_archive(
 
 http_archive(
     name = "libcamerao",
-    build_file = "//:libcamera.BUILD",
+    build_file = "//third_party:libcamera.BUILD",
     strip_prefix = "libcamera-bfd68f786964636b09f8122e6c09c230367390e7",
     url = "https://github.com/raspberrypi/libcamera/archive/bfd68f786964636b09f8122e6c09c230367390e7.zip",
 )
 
 http_archive(
     name = "vision_opencv",
-    build_file = "//:vision_opencv.BUILD",
+    build_file = "//third_party:vision_opencv.BUILD",
+    integrity = "sha256-DLvbS/Paicgz69p6rMusMWWGQ+zD9ygBbSZZXpCJbGE=",
     strip_prefix = "vision_opencv-9800f67cea477c44cfb64e349854bcb6a09dc9ce",
     url = "https://github.com/ros-perception/vision_opencv/archive/9800f67cea477c44cfb64e349854bcb6a09dc9ce.zip",
 )
