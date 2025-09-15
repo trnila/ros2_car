@@ -22,8 +22,7 @@ RUN --mount=target=/var/cache/pacman/pkg,type=cache,rw=true \
     clang \
     bazel \
     rsync \
-    uboot-tools \
-    dtc
+    linux-rpi
 
 RUN userdel -r alarm \
   # allow only ssh key auth and root user
@@ -34,10 +33,3 @@ RUN userdel -r alarm \
   && rm -f /boot/initramfs-linux-fallback.img
 
 ADD files/ /
-
-# compile Device Tree overlay for the board
-ADD car-overlay.dts /boot/
-RUN dtc -@ -I dts -O dtb /boot/car-overlay.dts > /boot/dtbs/car-overlay.dtbo \
-  # compile u-boot script boot.txt into boot.scr
-  && cd /boot \
-  && ./mkscr
