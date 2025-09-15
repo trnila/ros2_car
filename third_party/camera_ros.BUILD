@@ -11,9 +11,15 @@ ros2_cpp_binary(
             "src/*.cpp",
         ],
     ),
+    copts = [
+        "-I/usr/include/libcamera",
+    ],
+    linkopts = [
+        "-lcamera",
+        "-lcamera-base",
+    ],
     visibility = ["//visibility:public"],
     deps = [
-        "@libcamera",
         "@opencv",
         "@ros2_image_common//:camera_info_manager",
         "@ros2_rclcpp//:rclcpp",

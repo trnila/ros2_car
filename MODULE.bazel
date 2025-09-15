@@ -144,17 +144,6 @@ http_archive(
 )
 
 http_archive(
-    name = "libcamera",
-    build_file = "//third_party:libcamera.BUILD",
-    integrity = "sha256-8kZFA3tnZIG/2VFXeuePqz4UUFIDDhuJ0SQski0bB7M=",
-    patches = [
-        "//third_party:libcamera.patch",
-    ],
-    strip_prefix = "libcamera-bfd68f786964636b09f8122e6c09c230367390e7",
-    url = "https://github.com/raspberrypi/libcamera/archive/bfd68f786964636b09f8122e6c09c230367390e7.zip",
-)
-
-http_archive(
     name = "vision_opencv",
     build_file = "//third_party:vision_opencv.BUILD",
     integrity = "sha256-DLvbS/Paicgz69p6rMusMWWGQ+zD9ygBbSZZXpCJbGE=",
