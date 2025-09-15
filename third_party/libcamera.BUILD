@@ -23,7 +23,7 @@ meson(
     out_include_dir = "include/libcamera",
     out_lib_dir = select({
         "@platforms//cpu:x86_64": "lib/x86_64-linux-gnu",
-        "@platforms//cpu:arm64": "lib/aarch64-linux-gnu",
+        "@platforms//cpu:arm64": "lib",
     }),
     out_shared_libs = [
         "libcamera-base.so",
