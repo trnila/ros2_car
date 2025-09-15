@@ -23,4 +23,5 @@ meson(
     tags = [
         "requires-network",
     ],
+    visibility = ["//visibility:public"],
 )
