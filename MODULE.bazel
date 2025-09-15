@@ -73,6 +73,7 @@ use_repo(
     "ros2_rust",
     # Required for bazel run:
     "ros2_geometry2",
+    "ros2_image_common",
     "ros2_pluginlib",
     "ros2_rcl",
     "ros2_rclpy",
@@ -132,6 +133,9 @@ http_archive(
 http_archive(
     name = "camera_ros",
     build_file = "//:camera_ros.BUILD",
+    patches = [
+        "//:camera_ros.patch",
+    ],
     strip_prefix = "camera_ros-1eaa81fe43c4091b94a3a01d401f5dd3b19f462c",
     url = "https://github.com/christianrauch/camera_ros/archive/1eaa81fe43c4091b94a3a01d401f5dd3b19f462c.zip",
 )
@@ -141,13 +145,6 @@ http_archive(
     build_file = "//:libcamera.BUILD",
     strip_prefix = "libcamera-bfd68f786964636b09f8122e6c09c230367390e7",
     url = "https://github.com/raspberrypi/libcamera/archive/bfd68f786964636b09f8122e6c09c230367390e7.zip",
-)
-
-http_archive(
-    name = "image_common",
-    build_file = "//:image_common.BUILD",
-    strip_prefix = "image_common-10981bfa19be02b1a791f6cb67cdb1825c1d9088",
-    url = "https://github.com/ros-perception/image_common/archive/10981bfa19be02b1a791f6cb67cdb1825c1d9088.zip",
 )
 
 http_archive(

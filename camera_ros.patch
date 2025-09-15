@@ -1,0 +1,17 @@
+diff --git src/CameraNode.cpp src/CameraNode.cpp
+index b2c966f..8dbd109 100755
+--- src/CameraNode.cpp
++++ src/CameraNode.cpp
+@@ -734,3 +734,12 @@ CameraNode::onParameterChange(const std::vector<rclcpp::Parameter> &parameters)
+ #endif
+
+ } // namespace camera
++
++#include "rclcpp/rclcpp.hpp"
++int main(int argc, char **argv) {
++    rclcpp::init(argc, argv);
++    auto node = std::make_shared<camera::CameraNode>(rclcpp::NodeOptions());
++    rclcpp::spin(node);
++    rclcpp::shutdown();
++    return 0;
++}

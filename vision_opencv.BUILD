@@ -5,13 +5,9 @@ load(
 
 ros2_cpp_library(
     name = "cv_bridge",
-    srcs = glob(
-        [
-            "cv_bridge/*.hpp",
-            "cv_bridge/*.cpp",
-        ],
-        allow_empty = True,
-    ) + [
+    srcs = [
+        "cv_bridge/src/cv_bridge.cpp",
+        "cv_bridge/src/rgb_colors.cpp",
         ":cv_bridge_export",
     ],
     hdrs = glob([
@@ -20,6 +16,8 @@ ros2_cpp_library(
     includes = ["cv_bridge/include"],
     visibility = ["//visibility:public"],
     deps = [
+        "@opencv",
+        "@ros2_common_interfaces//:cpp_sensor_msgs",
     ],
 )
 
