@@ -10,7 +10,6 @@ ros2_cpp_binary(
             "src/*.hpp",
             "src/*.cpp",
         ],
-        allow_empty = True,
     ),
     visibility = ["//visibility:public"],
     deps = [

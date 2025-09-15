@@ -35,7 +35,6 @@ ros2_cpp_library(
             "bondcpp/**/*.hpp",
             "bondcpp/**/*.cpp",
         ],
-        allow_empty = True,
         exclude = [
             "**/test/**",
         ],
@@ -44,7 +43,6 @@ ros2_cpp_library(
         [
             "bondcpp/**/*.hpp",
         ],
-        allow_empty = True,
     ),
     includes = ["bondcpp/include"],
     visibility = ["//visibility:public"],
@@ -59,9 +57,7 @@ ros2_cpp_library(
     srcs = glob(
         [
             "smclib/**/*.hpp",
-            "smclib/**/*.cpp",
         ],
-        allow_empty = True,
         exclude = [
             "**/test/**",
         ],
@@ -70,7 +66,6 @@ ros2_cpp_library(
         [
             "smclib/**/*.hpp",
         ],
-        allow_empty = True,
     ),
     includes = ["smclib/include"],
     visibility = ["//visibility:public"],
