@@ -31,7 +31,7 @@ ros2_topic(
 )
 
 ros2_launch(
-    name = "car",
+    name = "car.launch",
     launch_file = "car.launch.py",
     nodes = [
         "//ultrasonic",

@@ -1,8 +1,17 @@
-# ROS2 car
+# ROS2 car with bazel
 
+## Build ArchlinuxARM based distribution for Raspberry PI
+
+```
+$ cd system
+$ ./build.sh
+$ ./write_sdcard.sh /dev/mmcblkX
+```
+
+## Build and run ROS2 apps
 ```sh
-$ wget https://github.com/bazelbuild/bazelisk/releases/download/v1.27.0/bazelisk-linux-arm64 -O ~/.local/bin/bazel
-$ chmod a+x ~/.local/bin/bazel
+# build and run
+$ bazel run //:car.launch
+# generate rust-project.json for rust-analyzer in VSCode
 $ bazel run @rules_rust//tools/rust_analyzer:gen_rust_project
-$ ros2 launch ./car.launch.py
 ```
