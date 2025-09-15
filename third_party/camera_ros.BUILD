@@ -18,6 +18,10 @@ ros2_cpp_binary(
         "-lcamera",
         "-lcamera-base",
     ],
+    # TODO: enable when camera is built from source
+    target_compatible_with = [
+        "@platforms//cpu:aarch64",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "@opencv",
