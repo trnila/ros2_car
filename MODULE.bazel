@@ -6,16 +6,17 @@ bazel_dep(name = "rules_python", version = "1.5.1")
 bazel_dep(name = "rules_rust", version = "0.63.0")
 bazel_dep(name = "platforms", version = "1.0.0")
 
-git_override(
-    module_name = "com_github_mvukov_rules_ros2",
-    commit = "7f1513429a2aae5c6e7ef1c78f5fd7ea06b3446b",
-    remote = "https://github.com/trnila/rules_ros2",
-)
-
-#local_path_override(
-#    module_name = "com_github_mvukov_rules_ros2",
-#    path = "../rules_ros2",
+#git_override(
+#module_name = "com_github_mvukov_rules_ros2",
+#commit = "7f1513429a2aae5c6e7ef1c78f5fd7ea06b3446b",
+#commit = "df8b31b8820532bf25ee693dbc44ac97cd1a77ed",
+#    remote = "https://github.com/trnila/rules_ros2",
 #)
+
+local_path_override(
+    module_name = "com_github_mvukov_rules_ros2",
+    path = "../rules_ros2",
+)
 
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(
