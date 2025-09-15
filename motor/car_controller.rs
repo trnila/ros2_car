@@ -24,7 +24,7 @@ impl Default for CarController {
     fn default() -> Self {
         let motor_dir_line: FoundLine = gpiocdev::find_named_line("GPIO6").unwrap();
         let motor_disable_line = gpiocdev::find_named_line("GPIO19").unwrap();
-        let actuator_en_gpio = gpiocdev::find_named_line("SPI_MOSI").unwrap();
+        let actuator_en_gpio = gpiocdev::find_named_line("GPIO10").unwrap();
 
         let gpios = gpiocdev::Request::builder()
             .with_consumer("motor_controller")

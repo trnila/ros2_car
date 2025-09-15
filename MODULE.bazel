@@ -5,6 +5,8 @@ bazel_dep(name = "rules_cc", version = "0.1.4")
 bazel_dep(name = "rules_python", version = "1.5.1")
 bazel_dep(name = "rules_rust", version = "0.63.0")
 bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_foreign_cc", version = "0.15.0")
+bazel_dep(name = "opencv", version = "4.11.0.bcr.2")
 
 git_override(
     module_name = "com_github_mvukov_rules_ros2",
@@ -125,4 +127,32 @@ http_archive(
     build_file = "//:bond_core.BUILD",
     strip_prefix = "bond_core-51536917f0d2c51a40c9f9cd73a9bce1c9a07bff",
     url = "https://github.com/ros/bond_core/archive/51536917f0d2c51a40c9f9cd73a9bce1c9a07bff.zip",
+)
+
+http_archive(
+    name = "camera_ros",
+    build_file = "//:camera_ros.BUILD",
+    strip_prefix = "camera_ros-1eaa81fe43c4091b94a3a01d401f5dd3b19f462c",
+    url = "https://github.com/christianrauch/camera_ros/archive/1eaa81fe43c4091b94a3a01d401f5dd3b19f462c.zip",
+)
+
+http_archive(
+    name = "libcamerao",
+    build_file = "//:libcamera.BUILD",
+    strip_prefix = "libcamera-bfd68f786964636b09f8122e6c09c230367390e7",
+    url = "https://github.com/raspberrypi/libcamera/archive/bfd68f786964636b09f8122e6c09c230367390e7.zip",
+)
+
+http_archive(
+    name = "image_common",
+    build_file = "//:image_common.BUILD",
+    strip_prefix = "image_common-10981bfa19be02b1a791f6cb67cdb1825c1d9088",
+    url = "https://github.com/ros-perception/image_common/archive/10981bfa19be02b1a791f6cb67cdb1825c1d9088.zip",
+)
+
+http_archive(
+    name = "vision_opencv",
+    build_file = "//:vision_opencv.BUILD",
+    strip_prefix = "vision_opencv-9800f67cea477c44cfb64e349854bcb6a09dc9ce",
+    url = "https://github.com/ros-perception/vision_opencv/archive/9800f67cea477c44cfb64e349854bcb6a09dc9ce.zip",
 )
