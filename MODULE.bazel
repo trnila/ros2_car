@@ -109,30 +109,6 @@ use_repo(crate, "crates")
 http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
-    name = "nav2",
-    build_file = "//third_party:nav2.BUILD",
-    integrity = "sha256-F3sPeDSGFAyb2tTzzn7SfPVtLH/aWyDZbS5Ux3Zapxs=",
-    strip_prefix = "navigation2-476d9e8d15892869c32a23252c2500196412e3a5",
-    url = "https://github.com/ros-navigation/navigation2/archive/476d9e8d15892869c32a23252c2500196412e3a5.zip",
-)
-
-http_archive(
-    name = "message_filters",
-    build_file = "//third_party:message_filters.BUILD",
-    integrity = "sha256-zgL5e3d3dQuncsbRLNSY64MTnhL7qSOkeBkosMgBSug=",
-    strip_prefix = "message_filters-85eef88521edc397c93e28780d96915c8b628b91",
-    url = "https://github.com/ros2/message_filters/archive/85eef88521edc397c93e28780d96915c8b628b91.zip",
-)
-
-http_archive(
-    name = "bond_core",
-    build_file = "//third_party:bond_core.BUILD",
-    integrity = "sha256-txpKyI+Q3O4/l4cfiLGpDZegrZLbSm+M/cQCIigwzK4=",
-    strip_prefix = "bond_core-51536917f0d2c51a40c9f9cd73a9bce1c9a07bff",
-    url = "https://github.com/ros/bond_core/archive/51536917f0d2c51a40c9f9cd73a9bce1c9a07bff.zip",
-)
-
-http_archive(
     name = "camera_ros",
     build_file = "//third_party:camera_ros.BUILD",
     integrity = "sha256-Ae5nHGgwJ9+eyJk+BwX9c7QaYh59NFWu+eq2qbkQnCo=",
