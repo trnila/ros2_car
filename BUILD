@@ -35,5 +35,6 @@ ros2_launch(
     launch_file = "car.launch.py",
     nodes = [
         "//ultrasonic",
+        "@camera_ros",
     ],
 )
