@@ -1,4 +1,7 @@
 # ROS2 car with bazel
+- steering and motor control
+- ultrasonic sensor
+- camera
 
 ## Build ArchlinuxARM based distribution for Raspberry PI
 
@@ -8,7 +11,7 @@ $ ./build.sh
 $ ./write_sdcard.sh /dev/mmcblkX
 ```
 
-## Build and run ROS2 apps
+## Build and run ROS2 apps on the target
 ```sh
 # build and run
 $ bazel run //:car.launch
