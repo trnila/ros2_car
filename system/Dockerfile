@@ -11,7 +11,8 @@ RUN --mount=target=/var/cache/pacman/pkg,type=cache,rw=true \
   && pacman -Syu --noconfirm
 
 RUN --mount=target=/var/cache/pacman/pkg,type=cache,rw=true \
-  pacman -Syu --noconfirm --needed \
+  pacman -Rnsc --noconfirm linux-aarch64 uboot-raspberrypi \
+  && pacman -Syu --noconfirm --needed \
     wget \
     vim \
     tmux \
