@@ -13,7 +13,7 @@ ros2_cpp_binary(
     ),
     visibility = ["//visibility:public"],
     deps = [
-        "@//libcamera",
+        "@libcamera",
         "@opencv",
         "@ros2_image_common//:camera_info_manager",
         "@ros2_rclcpp//:rclcpp",
