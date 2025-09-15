@@ -20,6 +20,18 @@ meson(
         "documentation": "disabled",
         "pycamera": "disabled",
     },
+    out_include_dir = "include/libcamera",
+    out_lib_dir = select({
+        "@platforms//cpu:x86_64": "lib/x86_64-linux-gnu",
+        "@platforms//cpu:arm64": "lib/aarch64-linux-gnu",
+    }),
+    out_shared_libs = [
+        "libcamera-base.so",
+        "libcamera.so",
+        "libpisp.so",
+        "libcamera/ipa/ipa_rpi_pisp.so",
+        "libcamera/ipa/ipa_rpi_vc4.so",
+    ],
     tags = [
         "requires-network",
     ],
