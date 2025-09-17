@@ -35,3 +35,4 @@ RUN userdel -r alarm \
   && rm -f /boot/initramfs-linux-fallback.img
 
 ADD files/ /
+RUN git clone https://github.com/trnila/ros2_car /root/ros2_car
