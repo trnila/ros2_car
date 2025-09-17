@@ -13,26 +13,28 @@ RUN --mount=target=/var/cache/pacman/pkg,type=cache,rw=true \
 RUN --mount=target=/var/cache/pacman/pkg,type=cache,rw=true \
   pacman -Rnsc --noconfirm linux-aarch64 uboot-raspberrypi \
   && pacman -Syu --noconfirm --needed \
-    wget \
-    vim \
-    tmux \
-    strace \
-    htop \
-    base-devel \
-    git \
-    clang \
-    bazel \
-    rsync \
-    linux-rpi \
-    libcamera
+  wget \
+  vim \
+  tmux \
+  strace \
+  htop \
+  base-devel \
+  git \
+  clang \
+  bazel \
+  rsync \
+  linux-rpi \
+  libcamera \
+  python
 
 RUN userdel -r alarm \
   # allow only ssh key auth and root user
   && sed -Ei 's/#?PermitRootLogin.+/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config \
   && sed -Ei 's/#?PasswordAuthentication.+/PasswordAuthentication no/' /etc/ssh/sshd_config \
-  # rpi4 is using mmcblk1
-  && sed -i 's/mmcblk0/mmcblk1/g' "/etc/fstab" \
   && rm -f /boot/initramfs-linux-fallback.img
+
+# needed in psutil dependency
+RUN ln -sf /usr/bin/gcc /usr/bin/aarch64-linux-gnu-gcc
 
 ADD files/ /
 RUN git clone https://github.com/trnila/ros2_car /root/ros2_car
