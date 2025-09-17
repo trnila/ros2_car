@@ -10,7 +10,7 @@ bazel_dep(name = "opencv", version = "4.11.0.bcr.2")
 
 git_override(
     module_name = "com_github_mvukov_rules_ros2",
-    commit = "789f56044b7021cb445898db645eb0a1d5c1ef60",
+    commit = "6cc1644a8051a27ee4d838c25c3aafcc76d4716f",
     remote = "https://github.com/trnila/rules_ros2",
 )
 
