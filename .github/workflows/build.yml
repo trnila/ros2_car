@@ -1,0 +1,26 @@
+name: build
+
+on:
+    workflow_dispatch:
+    push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
+      - run: bazel build //...
+
+  precommit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - uses: actions/setup-python@v6
+    - uses: pre-commit/action@v3.0.1
+      with:
+        extra_args: --all-files

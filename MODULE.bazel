@@ -1,0 +1,119 @@
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "0.0.0-20250612-f0d04fe")
+bazel_dep(name = "rules_cc", version = "0.1.4")
+bazel_dep(name = "rules_python", version = "1.5.1")
+bazel_dep(name = "rules_rust", version = "0.63.0")
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_foreign_cc", version = "0.15.0")
+bazel_dep(name = "opencv", version = "4.11.0.bcr.2")
+bazel_dep(name = "boost.endian", version = "1.83.0.bcr.1")
+
+git_override(
+    module_name = "com_github_mvukov_rules_ros2",
+    commit = "6cc1644a8051a27ee4d838c25c3aafcc76d4716f",
+    remote = "https://github.com/trnila/rules_ros2",
+)
+
+#local_path_override(
+#    module_name = "com_github_mvukov_rules_ros2",
+#    path = "../rules_ros2",
+#)
+
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2021",
+    versions = ["1.88.0"],
+)
+rust.repository_set(
+    name = "rust_linux_x86_64",
+    edition = "2021",
+    exec_triple = "x86_64-unknown-linux-gnu",
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+    target_triple = "x86_64-unknown-linux-gnu",
+    versions = ["1.88.0"],
+)
+rust.repository_set(
+    name = "rust_linux_x86_64",
+    target_compatible_with = [
+        "@platforms//cpu:arm64",
+        "@platforms//os:linux",
+    ],
+    target_triple = "aarch64-unknown-linux-musl",
+)
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    is_default = True,
+    python_version = "3.10",
+)
+
+register_toolchains(
+    "@com_github_mvukov_rules_ros2//repositories/rust:bindgen_toolchain",
+    dev_dependency = True,
+)
+
+rules_ros2_non_module_deps = use_extension("@com_github_mvukov_rules_ros2//ros2:extensions.bzl", "non_module_deps")
+use_repo(
+    rules_ros2_non_module_deps,
+    "ros2_common_interfaces",
+    "ros2_geometry2",
+    "ros2_image_common",
+    "ros2_launch",
+    "ros2_launch_ros",
+    "ros2_pluginlib",
+    "ros2_rcl",
+    "ros2_rcl_interfaces",
+    "ros2_rclcpp",
+    "ros2_rclpy",
+    "ros2_rosidl",
+    "ros2_rust",
+    "ros2cli",
+)
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+crate.spec(
+    package = "signal-hook",
+    version = "0.3.18",
+)
+crate.spec(
+    package = "gpiocdev",
+    version = "0.7.3",
+)
+crate.spec(
+    package = "sysfs-pwm",
+    version = "0.1.0",
+)
+crate.spec(
+    features = ["derive"],
+    package = "clap",
+    version = "4.5.47",
+)
+crate.spec(
+    package = "clap-repl",
+    version = "0.3.2",
+)
+crate.from_specs()
+use_repo(crate, "crates")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "camera_ros",
+    build_file = "//third_party:camera_ros.BUILD",
+    integrity = "sha256-Ae5nHGgwJ9+eyJk+BwX9c7QaYh59NFWu+eq2qbkQnCo=",
+    patches = [
+        "//third_party:camera_ros.patch",
+    ],
+    strip_prefix = "camera_ros-1eaa81fe43c4091b94a3a01d401f5dd3b19f462c",
+    url = "https://github.com/christianrauch/camera_ros/archive/1eaa81fe43c4091b94a3a01d401f5dd3b19f462c.zip",
+)
+
+http_archive(
+    name = "vision_opencv",
+    build_file = "//third_party:vision_opencv.BUILD",
+    integrity = "sha256-DLvbS/Paicgz69p6rMusMWWGQ+zD9ygBbSZZXpCJbGE=",
+    strip_prefix = "vision_opencv-9800f67cea477c44cfb64e349854bcb6a09dc9ce",
+    url = "https://github.com/ros-perception/vision_opencv/archive/9800f67cea477c44cfb64e349854bcb6a09dc9ce.zip",
+)
