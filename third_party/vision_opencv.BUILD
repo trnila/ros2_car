@@ -16,6 +16,7 @@ ros2_cpp_library(
     includes = ["cv_bridge/include"],
     visibility = ["//visibility:public"],
     deps = [
+        "@boost.endian",
         "@opencv",
         "@ros2_common_interfaces//:cpp_sensor_msgs",
     ],
