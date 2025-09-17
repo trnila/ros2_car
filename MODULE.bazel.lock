@@ -367,7 +367,7 @@
     },
     "@@com_github_mvukov_rules_ros2+//ros2:extensions.bzl%non_module_deps": {
       "general": {
-        "bzlTransitiveDigest": "jmJwa/Y/ODlvPXmrInOIiCT89N+MC3G4VT0/yH7H1ZA=",
+        "bzlTransitiveDigest": "YHNtYaQll6HMkjM/DjDt3aYsoWwiEvr2s/h/EiqY4PQ=",
         "usagesDigest": "Z6+l76k5y+EyqxKfa9ExWezr1c3RU5mBreA/bwxh0Ok=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
