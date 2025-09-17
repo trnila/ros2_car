@@ -107,7 +107,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let node = rclrs::create_node(&context, "ultrasonic")?;
 
     let publisher =
-        node.create_publisher::<sensor_msgs::msg::Range>("topic", rclrs::QOS_PROFILE_DEFAULT)?;
+        node.create_publisher::<sensor_msgs::msg::Range>("ultrasonic", rclrs::QOS_PROFILE_DEFAULT)?;
     let mut message = sensor_msgs::msg::Range {
         radiation_type: sensor_msgs::msg::Range::ULTRASOUND,
         field_of_view: 0.0,
